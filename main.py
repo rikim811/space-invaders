@@ -4,6 +4,7 @@ from enemy import Enemy
 from pygame import mixer
 from bullet import Bullet
 from enemy_bullets import EnemyBullets
+from explosion import Explosion
 import random
 
 pygame.mixer.pre_init(44100, -16, 2, 512)
@@ -31,8 +32,9 @@ player = Player()
 player_group = pygame.sprite.Group(player)
 
 #bullet
-
 bullet_group = pygame.sprite.Group()
+#Explosion
+explosion_group = pygame.sprite.Group()
 #enemy_bullet
 enemy_bullet_cooldown = 1000
 enemy_bullets = EnemyBullets()
@@ -56,14 +58,15 @@ for p in range(5):
 while True:
 
 
-  player.update(player,Bullet,bullet_group)
+  player.update(Bullet,bullet_group)
+  enemy_bullets.update( player_group, enemy_group, explosion_group)
 
   for enemy in enemy_group:
     enemy.update()
 
   for bullet in bullet_group:
     bullet.update(enemy_group)
-    enemy_bullets.update(player_group, enemy_group)
+
 
 
 
@@ -82,5 +85,6 @@ while True:
   enemy_group.draw(screen)
   bullet_group.draw(screen)
   enemy_bullets.draw(screen)
+  explosion_group.draw(screen)
   pygame.display.update()
   clock.tick(FPS)

@@ -1,6 +1,7 @@
 import random
 from bullet import EnemyBullet
 
+
 import pygame
 class EnemyBullets(pygame.sprite.Group):
 
@@ -10,7 +11,7 @@ class EnemyBullets(pygame.sprite.Group):
         self.last_shot = pygame.time.get_ticks()
         self.enemy_bullet_image = pygame.image.load('img/alien_bullet.png')
 
-    def update(self, player_group,enemy_group):
+    def update(self, player_group,enemy_group,explosion_group):
         if pygame.time.get_ticks() - self.last_shot > self.cooldown:
             shooter = random.choice(enemy_group.sprites())
             x = shooter.rect.centerx
@@ -20,6 +21,5 @@ class EnemyBullets(pygame.sprite.Group):
             bullet = EnemyBullet(self.enemy_bullet_image, x, y)
             self.add(bullet)
 
-
         for bullet in self.sprites():
-            bullet.update(player_group)
+            bullet.update(player_group, explosion_group)

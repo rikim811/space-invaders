@@ -1,4 +1,6 @@
 import pygame
+from explosion import Explosion
+
 
 class Bullet(pygame.sprite.Sprite):
 
@@ -27,10 +29,12 @@ class EnemyBullet(pygame.sprite.Sprite):
         self.rect.bottom = y
         self.speed = 4
 
-
-    def update(self,player_group):
+    def update(self, player_group, explosion_group):
         self.rect.y += self.speed
         if self.rect.centery == 800:
             self.kill()
-        if pygame.sprite.spritecollide(self,player_group,False):
+        if pygame.sprite.spritecollide(self, player_group, False):
+            explosion = Explosion(self.rect.x, self.rect.y)
+            explosion_group.add(explosion)
+
             self.kill()
